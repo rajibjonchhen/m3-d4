@@ -7,13 +7,14 @@ const loadImages = function(){
 
             books.forEach(book => {
                 const col = document.createElement("div")
-                col.classList.add("col-12", "col-md-3", "d-flex", "mt-3")
+                col.classList.add("col-12","col-sm-6", "col-md-4","col-lg-3", "d-flex", "mt-3")
                 col.innerHTML = `<div class="card" style="width: 18rem;">
-                <img src="${book.img}" class="card-img-top img-fluid  w-100" alt="...">
+                <div class="imgContainer"><img src="${book.img}" class="card-img-top img-fluid  w-100" alt="..."></div>
             <div class="card-body">
                 <h5 class="card-title">${book.title}</h5>
                     <p class="card-text ">Category - ${book.category}</p>
                     <span class="bg-secondary text-white p-1">£ ${book.price}</span>  
+                    <span class="bg-danger text-white p-1">  <small> ID${book.asin} </small></span>  
                     <div class="mt-2">
                         <a href="#" class="btn btn-success" onclick= "addToCartBtn(event)">Add to card</a>
                             <a href="#" class="btn btn-primary" onclick= "skipBtn(event)">Skip</a>

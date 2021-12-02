@@ -1,0 +1,27 @@
+body{
+    
+    width:100vw
+}
+.imgContainer{
+    overflow: hidden;
+   height: 350px;
+}
+
+aside{
+    left: 0;
+    position:absolute ;
+    height: 50vw;
+    width: 30vw;
+    background-color: aquamarine;
+    z-index: 1;
+
+}
+aside .container{
+position:relative;
+}
+
+.hideAsideBtn{
+    position: absolute;
+    right: 1%;
+    top: 1%;
+}
