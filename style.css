@@ -8,12 +8,14 @@ body{
 }
 
 aside{
-    left: 0;
+    right: 0;
+    top:8%;
     position:absolute ;
-    height: 50vw;
+    height: 53vw;
     width: 30vw;
-    background-color: aquamarine;
+    background-color: rgb(188, 228, 215);
     z-index: 1;
+    opacity:0;
 
 }
 aside .container{
@@ -24,4 +26,8 @@ position:relative;
     position: absolute;
     right: 1%;
     top: 1%;
+}
+
+.hideElement{
+    opacity:1;
 }
