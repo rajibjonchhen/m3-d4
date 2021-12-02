@@ -14,7 +14,7 @@
         <a class="navbar-brand" href="#">My Book Store</a>
 
           <form class="form-inline my-2 my-lg-0">
-              <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+              <input id="search" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
               <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
               <button class="btn bg-success ml-2" onclick="displayCart(event)"><i class="bi bi-bag-check"></i></button>
           </form>
@@ -30,63 +30,7 @@
     </div>
 
 
-    <script>
-
-        const loadImages = function(){
-            fetch("https://striveschool-api.herokuapp.com/books")
-                .then(response => response.json())
-                .then( books => {
-                    console.log(books[0])
-                    const row = document.querySelector(".row:nth-of-type(2)")
-
-                    books.forEach(book => {
-                        const col = document.createElement("div")
-                        col.classList.add("col-12", "col-md-3", "d-flex", "mt-3")
-                        col.innerHTML = `<div class="card" style="width: 18rem;">
-                        <img src="${book.img}" class="card-img-top img-fluid  w-100" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">${book.title}</h5>
-                            <p class="card-text ">Category - ${book.category}</p>
-                            <span class="bg-secondary text-white p-1">£ ${book.price}</span>  
-                            <div class="mt-2">
-                                <a href="#" class="btn btn-success" onclick= "addToCartBtn(event)">Add to card</a>
-                                    <a href="#" class="btn btn-primary" onclick= "skipBtn(event)">Skip</a>
-                            </div>
-                            </div>
-                        </div>`
-                        row.appendChild(col)
-
-                    });
-                
-                })
-        }
-
-        const addToCartBtn = function(event){
-            let cartItems =[]
-            cartItems = event.target.closest(".card")
-            return(cartItems)
-        }
-
-        const displayCart = function(eventData){
-            let cartItems = cartItems()
-            let cart = document.querySelector("nav button:last-of-type")
-            let row = document.querySelector("row:first-of-type")
-            let h1 = document.querySelector("h1:first-of-type")
-            h1.innerHTML = "My Favourite Books"
-            cartItems.foreach(item =>{
-                row.innerHTML += `<div class= "col-12 col-sm-6 col-md-4 col-lg-3"></dic>`
-            })
-        }
-
-        const skipBtn = function(event){
-            event.target.closest(".col-12").remove()
-        }
-
-        
-        window.onload = function(){
-            loadImages()    
-        }
-    </script>
+    <script src="index.js"></script>
 
     <!-- bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
