@@ -2,9 +2,15 @@ const loadImages = function(){
     fetch("https://striveschool-api.herokuapp.com/books")
         .then(response => response.json())
         .then( books => {
-            console.log(books[0])
-            const row = document.querySelector(".row:nth-of-type(2)")
+            
+                renderBooks(books)
+            })
+                   
+}
 
+    const renderBooks = function(books){
+        let row = document.querySelector('main.row')
+        row.innerHTML =""
             books.forEach(book => {
                 const col = document.createElement("div")
                 col.classList.add("col-12","col-sm-6", "col-md-4","col-lg-3", "d-flex", "mt-3")
@@ -24,10 +30,20 @@ const loadImages = function(){
                     </div>
                 </div>`
                 row.appendChild(col)
-
-            });
+            })
+            };
         
-        })
+
+            // filter books with the input
+const filterBooks = function(event){
+    let search = document.getElementById('search')
+search.addEventListener ("keyup", (event)=>{
+    let searchText = event.keyCode.value
+    if(event.keyCode === 13) {
+        console.log(searchText)
+       const searchedBooks = books.filter(book)
+    }
+})
 }
 
 const addToCart = function(event){
@@ -53,17 +69,7 @@ const skipBtn = function(event){
     event.target.closest(".col-12").remove()
 }
 
-// filter books with the input
-const filterBooks = function(){
-    let search = document.getElementById('search')
-search.addEventListener ("keyup", (event)=>{
-    let searchText = event.keyCode.value
-    if(event.keyCode === 13) {
-        console.log(searchText)
-       const searchedBooks = books.filter(book)
-    }
-})
-}
+
 
 
 // hide aside with the cart key
