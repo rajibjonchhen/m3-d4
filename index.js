@@ -36,6 +36,12 @@ const loadImages = function(){
 
             // filter books with the input
 const filterBooks = function(event){
+    let search = document.getElementById('search').value
+    console.log(search)
+    
+}
+
+const searchBooks = function(event){
     let search = document.getElementById('search')
 search.addEventListener ("keyup", (event)=>{
     let searchText = event.keyCode.value
@@ -49,7 +55,7 @@ search.addEventListener ("keyup", (event)=>{
 const addToCart = function(event){
     let aside = document.querySelector("aside")
     let bookPicked = event.target.closest(".card")
-    bookPicked.style.border = ("5px solid red")
+    bookPicked.classList.toggle("addRedBorder")
     console.log(bookPicked)
     aside.innerHTML += `<div>${bookPicked}</div>`
 }

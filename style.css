@@ -31,3 +31,11 @@ position:relative;
 .hideElement{
     opacity:1;
 }
+
+.addRedBorder{
+    border : 5px solid red
+}
+
+.card{
+    box-sizing: border-box;
+}
