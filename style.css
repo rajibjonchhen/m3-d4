@@ -7,20 +7,24 @@ body{
    height: 350px;
 }
 
+
 aside{
+    min-width: 270px;
     right: 0;
-    top:8%;
+    top:55px;
     position:absolute ;
-    height: 53vw;
-    width: 30vw;
+    display: none;
     background-color: rgb(188, 228, 215);
     z-index: 1;
-    opacity:0;
+    display:0;
+    height:400px;
     overflow: scroll;
-
+    padding: 10px;
 }
-aside .container{
-position:relative;
+
+
+aside .card{
+    min-width: 250px;
 }
 
 aside .card .card-body{
@@ -40,7 +44,7 @@ aside .card img{
 }
 
 .hideElement{
-    opacity:1;
+    display:block;
 }
 
 

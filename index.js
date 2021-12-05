@@ -32,7 +32,7 @@ const filterBooks = function(searchQuery){
                 col.classList.add("col-12","col-sm-6", "col-md-4","col-lg-3", "d-flex", "mt-3")
                 col.innerHTML = `<div class="card" style="width: 18rem;">
                 <div class="imgContainer">
-                    <img src="${book.img}" class="card-img-top img-fluid  w-100" alt="...">
+                    <img src="${book.img}" class="card-img-top img-fluid  w-100" alt="image of a book ">
                 </div>
             <div class="card-body d-flex flex-column justify-content-between">
                 <h6 class="card-title">${book.title}</h6>
@@ -128,17 +128,17 @@ const displayInTheCart = function(id, btnText){
     .then( books => {
         books.forEach((book) =>{
             if(book.asin === id){
-                col.innerHTML +=`<div class="card mb-2 ">
+                col.innerHTML +=`<div class="card mb-2">
                 <div class="row no-gutters p-0 m-0">
-                  <div class="col-md-3  p-0 m-0 mt-1">
+                  <div class="col col-md-3  p-0 m-0 mt-1">
                     <img src="${book.img}"  alt="image of a book ${book.title} ">
                   </div>
-                  <div class="col-md-9">
-                    <div class="card-body">
-                      <p class="card-title">${book.title}</p>
+                  <div class="col col-md-9">
+                  <p class="card-title">${book.title}</p>
+                    <div class="card-body ">
                       <span class="card-text">$ ${book.price}</span>
-                      <span class="card-text"><small class="text-muted">${book.asin}</small></span>
-                      <button href="" class="btn btn-sm btn-primary" onclick= "skipBtn(event)" id="${book.asin}">Skip</button>
+                      <button href="" class="btn btn-sm btn-primary" onclick= "skipBtn(event)" id="${book.asin}">Remove from cart</button>
+                     
                     </div>
                   </div>
                 </div>
