@@ -1,11 +1,11 @@
-const loadImages = function(){
+const loadBooks = function(){
     fetch("https://striveschool-api.herokuapp.com/books")
         .then(response => response.json())
         .then( books => {
             
                 renderBooks(books)
             })
-                   
+            
 }
 
     const renderBooks = function(books){
@@ -19,13 +19,13 @@ const loadImages = function(){
                     <img src="${book.img}" class="card-img-top img-fluid  w-100" alt="...">
                 </div>
             <div class="card-body">
-                <h5 class="card-title">${book.title}</h5>
+                <h6 class="card-title">${book.title}</h6>
                     <p class="card-text ">Category - ${book.category}</p>
                     <span class="bg-secondary text-white p-1">£ ${book.price}</span>  
                     <span class="bg-danger text-white p-1">  <small> ID${book.asin} </small></span>  
                     <div class="mt-2">
-                        <a href="#" class="btn btn-success" onclick= "addToCart(event)">Add to card</a>
-                            <a href="#" class="btn btn-primary" onclick= "skipBtn(event)">Skip</a>
+                        <button href="#" class="btn btn-success" onclick= "addToCart(event)" id="${book.asin}">Add to cart</button>
+                            
                     </div>
                     </div>
                 </div>`
@@ -34,30 +34,79 @@ const loadImages = function(){
             };
         
 
-            // filter books with the input
-const filterBooks = function(event){
-    let search = document.getElementById('search').value
-    console.log(search)
-    
-}
-
-const searchBooks = function(event){
+// search using enter key
+const searchBooks2 = function(event){
     let search = document.getElementById('search')
 search.addEventListener ("keyup", (event)=>{
     let searchText = event.keyCode.value
     if(event.keyCode === 13) {
-        console.log(searchText)
-       const searchedBooks = books.filter(book)
+        filterBooks(searchQuery) 
     }
 })
 }
 
+// search using search button
+const filterBooks = function(searchQuery){
+    fetch("https://striveschool-api.herokuapp.com/books")
+    .then(response => response.json())
+    .then( books => {
+        console.log(searchQuery)
+        console.log(books)
+        
+        const filteredBooks = books.filter((book)=>book.title.toLowerCase().includes(searchQuery.toLowerCase()))
+    console.log(filteredBooks)   
+    })
+}
+
 const addToCart = function(event){
-    let aside = document.querySelector("aside")
+    
     let bookPicked = event.target.closest(".card")
     bookPicked.classList.toggle("addRedBorder")
-    console.log(bookPicked)
-    aside.innerHTML += `<div>${bookPicked}</div>`
+    let id = event.target.id
+    if(event.target.innerText === "Add to cart"){
+        event.target.innerText = "Remove from cart"
+    } else
+    event.target.innerText = "Add to cart"
+    
+    let col = document.querySelector("aside .row .col")
+    fetch("https://striveschool-api.herokuapp.com/books")
+    .then(response => response.json())
+    .then( books => {
+        
+        console.log(books)
+        let arrChosenBooks=[]
+        
+        books.forEach((book) =>{
+            
+            if(book.asin === id){
+            // let index=0
+            // arrChosenBooks[index] = book.asin
+            // index++
+            // for(let i=0; i < arrChosenBooks.length; i++){
+            //   if(arrChosenBooks[i] !== id){
+                
+                col.innerHTML +=`<div class="card mb-2">
+                <div class="row no-gutters">
+                  <div class="col-md-4">
+                    <img src="${book.img}" height="70px" width="70px" alt="image of a book ${book.title} ">
+                  </div>
+                  <div class="col-md-8">
+                    <div class="card-body">
+                      <p class="card-title">${book.title}</p>
+                      <span class="card-text">$ ${book.price}</span>
+                      <span class="card-text"><small class="text-muted">${book.asin}</small></span>
+                      <button href="" class="btn btn-sm btn-primary" onclick= "skipBtn(event)">Skip</button>
+                    </div>
+                  </div>
+                </div>
+              </div>`
+              
+               
+            //     }
+            //  }
+         }
+    })  
+})
 }
 // append to the cart
 // const displayCart = function(eventData){
@@ -72,7 +121,7 @@ const addToCart = function(event){
 // }
 
 const skipBtn = function(event){
-    event.target.closest(".col-12").remove()
+    event.target.closest(".row").remove()
 }
 
 
@@ -104,7 +153,8 @@ const displayCart = function(event){
 // }
 
 window.onload = function(){ 
-    loadImages()
+    loadBooks()
 
+    
      
 }

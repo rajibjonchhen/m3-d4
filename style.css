@@ -15,7 +15,8 @@ aside{
     width: 30vw;
     background-color: rgb(188, 228, 215);
     z-index: 1;
-    opacity:0;
+    opacity:1;
+    overflow: scroll;
 
 }
 aside .container{
@@ -32,10 +33,19 @@ position:relative;
     opacity:1;
 }
 
-.addRedBorder{
-    border : 5px solid red
+
+
+main .card{
+    box-sizing: border-box;
+    border : 5px solid white;
+    box-shadow: 0 0 5px 5px rgb(190, 189, 189);
 }
 
-.card{
-    box-sizing: border-box;
+.addRedBorder{
+    /* border : 5px solid red !important; */
+    box-shadow: 0 0 10px 10px rgb(87, 75, 75) !important;
+}
+ 
+main .card button{
+width:160px;
 }
