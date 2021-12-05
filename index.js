@@ -1,3 +1,4 @@
+// fetch all the books
 const loadBooks = function(){
     fetch("https://striveschool-api.herokuapp.com/books")
         .then(response => response.json())
@@ -9,6 +10,20 @@ const loadBooks = function(){
             
 }
 
+// filter books
+const filterBooks = function(searchQuery){
+    fetch("https://striveschool-api.herokuapp.com/books")
+    .then(response => response.json())
+    .then( books => {
+        let row = document.querySelector('main.row')
+        row.innerHTML=""
+        const filteredBooks = (books.filter((book)=>book.title.toLowerCase().includes(searchQuery.toLowerCase())))
+        
+        renderBooks(filteredBooks)
+    })
+}
+
+    // display all books or filtered books in the page 
     const renderBooks = function(books){
         let row = document.querySelector('main.row')
         row.innerHTML =""
@@ -19,13 +34,13 @@ const loadBooks = function(){
                 <div class="imgContainer">
                     <img src="${book.img}" class="card-img-top img-fluid  w-100" alt="...">
                 </div>
-            <div class="card-body">
+            <div class="card-body d-flex flex-column justify-content-between">
                 <h6 class="card-title">${book.title}</h6>
                     <p class="card-text ">Category - ${book.category}</p>
-                    <span class="bg-secondary text-white p-1">£ ${book.price}</span>  
-                    <span class="bg-danger text-white p-1">  <small> ID${book.asin} </small></span>  
                     <div class="mt-2">
-                        <button href="#" class="btn btn-success" onclick= "addToCart(event)" id="${book.asin}">Add to cart</button>
+                    <span class="bg-secondary text-white p-1 rounded">£ ${book.price}</span>  
+                    <span class="bg-danger text-white p-1 rounded">  <small> ID${book.asin} </small></span>  
+                        <button href="#" class="btn btn-sm btn-success mt-2" onclick= "addToCart(event)" id="${book.asin}">Add to cart</button>
                             
                     </div>
                     </div>
@@ -34,14 +49,11 @@ const loadBooks = function(){
             })
             };
         
-
+            // search using search button
             const searchBooks1 = function(event){
-               
-               let  searchQuery = document.getElementById("search").value
-               if(searchQuery != null && searchQuery !=undefined && searchQuery !=""){
-
-                   console.log(searchQuery)
-                   filterBooks(searchQuery)
+            let  searchQuery = document.getElementById("search").value
+            if(searchQuery != null && searchQuery !=undefined && searchQuery !=""){
+            filterBooks(searchQuery)
                 } else
                 alert("Please Enter the valid search")
             }
@@ -56,42 +68,34 @@ search.addEventListener ("keyup", (event)=>{
 })
 }
 
-// search using search button
-
-const filterBooks = function(searchQuery){
-    fetch("https://striveschool-api.herokuapp.com/books")
-    .then(response => response.json())
-    .then( books => {
-        let row = document.querySelector('main.row')
-        row.innerHTML=""
-        const filteredBooks = (books.filter((book)=>book.title.toLowerCase().includes(searchQuery.toLowerCase())))
-        filteredBooks.forEach(book =>{
-           
-            const col = document.createElement("div")
-            col.classList.add("col-12","col-sm-6", "col-md-4","col-lg-3", "d-flex", "mt-3")
-            col.innerHTML = `<div class="card" style="width: 18rem;">
-            <div class="imgContainer">
-                <img src="${book.img}" class="card-img-top img-fluid  w-100" alt="...">
-            </div>
-        <div class="card-body">
-            <h6 class="card-title">${book.title}</h6>
-                <p class="card-text ">Category - ${book.category}</p>
-                <span class="bg-secondary text-white p-1">£ ${book.price}</span>  
-                <span class="bg-danger text-white p-1">  <small> ID${book.asin} </small></span>  
-                <div class="mt-2">
-                    <button href="#" class="btn btn-success" onclick= "addToCart(event)" id="${book.asin}">Add to cart</button>
-                        
-                </div>
-                </div>
-            </div>` 
-            row.appendChild(col)       
-        })
-    })
-}
 
 
-const addToCart = function(event){
+
+    // const addToCart = function(event){
+    //     let btns = document.querySelectorAll("main.row .card button") 
+    // btns.forEach(btn=>{
+    //   if(event.target.id === btn.id)  {
+    //     event.target.closest(".card").remove()
+    //     let bookPicked = btn.closest(".card")
+    //     bookPicked.classList.toggle("addRedBorder")
+    //     let id = event.target.id
+    //     if(btn.innerText === "Add to cart"){
+    //         displayInTheCart(id,event.target.innerText)
+    //         btn.innerText = "Remove from cart"
+    //     } 
+    //     else{
+    //         displayInTheCart(id,event.target.innerText)
+    //         btn.innerText = "Add to cart"
+            
+    //     }
+    //   }
     
+    // })
+    // }
+
+// add books to the cart
+const addToCart = function(event){
+    let btns = document.querySelectorAll("main.row") 
     let bookPicked = event.target.closest(".card")
     bookPicked.classList.toggle("addRedBorder")
     let id = event.target.id
@@ -122,14 +126,8 @@ const displayInTheCart = function(id, btnText){
     fetch("https://striveschool-api.herokuapp.com/books")
     .then(response => response.json())
     .then( books => {
-        
-        console.log(books)
-        let arrChosenBooks=[]
-        
         books.forEach((book) =>{
-            
             if(book.asin === id){
-        
                 col.innerHTML +=`<div class="card mb-2 ">
                 <div class="row no-gutters p-0 m-0">
                   <div class="col-md-3  p-0 m-0 mt-1">
@@ -151,12 +149,20 @@ const displayInTheCart = function(id, btnText){
 }
 }
 
-const removeFromTheCart = function(id){
-    
-}
+
 
 const skipBtn = function(event){
     event.target.closest(".card").remove()
+    let btns = document.querySelectorAll("main.row .card button") 
+    btns.forEach(btn =>{
+        if(btn.id === event.target.id){
+            let bookPicked = btn.closest(".card")
+            bookPicked.classList.remove("addRedBorder")
+            let id = event.target.id
+            btn.innerText = "Add to cart" 
+        }
+    })
+ 
 }
 
 
@@ -169,7 +175,4 @@ const displayCart = function(event){
 
 window.onload = function(){ 
     loadBooks()
-
-    
-     
 }
