@@ -90,47 +90,33 @@ const filterBooks = function(searchQuery){
 }
 
 
-// const filteredBooks = function(searchQuery){
-//     fetch("https://striveschool-api.herokuapp.com/books")
-//     .then(response => response.json())
-//     .then( books => {
-        
-//     let row = document.querySelector('main.row')
-//     row.innerHTML =""
-//         books.forEach(book => {
-
-           
-//             const col = document.createElement("div")
-//             col.classList.add("col-12","col-sm-6", "col-md-4","col-lg-3", "d-flex", "mt-3")
-//             col.innerHTML = `<div class="card" style="width: 18rem;">
-//             <div class="imgContainer">
-//                 <img src="${book.img}" class="card-img-top img-fluid  w-100" alt="...">
-//             </div>
-//         <div class="card-body">
-//             <h6 class="card-title">${book.title}</h6>
-//                 <p class="card-text ">Category - ${book.category}</p>
-//                 <span class="bg-secondary text-white p-1">£ ${book.price}</span>  
-//                 <span class="bg-danger text-white p-1">  <small> ID${book.asin} </small></span>  
-//                 <div class="mt-2">
-//                     <button href="#" class="btn btn-success" onclick= "addToCart(event)" id="${book.asin}">Add to cart</button>
-                        
-//                 </div>
-//                 </div>
-//             </div>`          
-//         }
-//     })
-//     })
-//         }
-
 const addToCart = function(event){
     
     let bookPicked = event.target.closest(".card")
     bookPicked.classList.toggle("addRedBorder")
     let id = event.target.id
     if(event.target.innerText === "Add to cart"){
+        displayInTheCart(id,event.target.innerText)
         event.target.innerText = "Remove from cart"
-    } else
-    event.target.innerText = "Add to cart"
+    } 
+    else{
+        displayInTheCart(id,event.target.innerText)
+        event.target.innerText = "Add to cart"
+        
+    }
+
+}
+
+const displayInTheCart = function(id, btnText){
+    let btns = document.querySelectorAll("aside .card button")
+    if(btnText === "Remove from cart"){
+        btns.forEach(btn =>{
+            if(btn.id === id){
+                btn.closest(".card").remove()
+            }
+        })
+    }
+    else{
 
     let col = document.querySelector("aside .row .col")
     fetch("https://striveschool-api.herokuapp.com/books")
@@ -143,36 +129,31 @@ const addToCart = function(event){
         books.forEach((book) =>{
             
             if(book.asin === id){
-            // let index=0
-            // arrChosenBooks[index] = book.asin
-            // index++
-            // for(let i=0; i < arrChosenBooks.length; i++){
-            //   if(arrChosenBooks[i] !== id){
-                
+        
                 col.innerHTML +=`<div class="card mb-2 ">
                 <div class="row no-gutters p-0 m-0">
-                  <div class="col-md-4  p-0 m-0">
+                  <div class="col-md-3  p-0 m-0 mt-1">
                     <img src="${book.img}"  alt="image of a book ${book.title} ">
                   </div>
-                  <div class="col-md-8">
+                  <div class="col-md-9">
                     <div class="card-body">
                       <p class="card-title">${book.title}</p>
                       <span class="card-text">$ ${book.price}</span>
                       <span class="card-text"><small class="text-muted">${book.asin}</small></span>
-                      <button href="" class="btn btn-sm btn-primary" onclick= "skipBtn(event)">Skip</button>
+                      <button href="" class="btn btn-sm btn-primary" onclick= "skipBtn(event)" id="${book.asin}">Skip</button>
                     </div>
                   </div>
                 </div>
               </div>`
-              
-               
-            //     }
-            //  }
          }
     })  
 })
 }
+}
 
+const removeFromTheCart = function(id){
+    
+}
 
 const skipBtn = function(event){
     event.target.closest(".card").remove()
