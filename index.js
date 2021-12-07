@@ -168,7 +168,7 @@ const skipBtn = function(event){
 
 // hide aside with the cart key
 const displayCart = function(event){
-    event.preventDefault()
+   
     let aside = document.querySelector("aside")
 
     aside.classList.toggle("hideElement")
